@@ -22,8 +22,6 @@ public class UseArrayBlockingQueue {
             new Thread(productThread).start();
         }
 
-
-
         for(int i = 0; i < 12; i++){
             new Thread(consumerThread).start();
         }
