@@ -61,6 +61,7 @@ public class ProductThread implements Runnable{
                 People pp = new People();
                 pp.setAge(2 + r.nextInt());
                 queue.add(pp);
+                System.out.println(Thread.currentThread().getName()+" 的add添加方法已完成");
             }
 
         }else if(OFFER == monthName){
@@ -86,6 +87,7 @@ public class ProductThread implements Runnable{
                 People pp = new People();
                 pp.setAge(2 + r.nextInt());
                 queue.offer(pp);
+                System.out.println(Thread.currentThread().getName()+" 的offer添加方法已完成");
             }
 
         }else if(PUT == monthName){
@@ -117,6 +119,7 @@ public class ProductThread implements Runnable{
                 pp.setAge(2 + r.nextInt());
                 try {
                     queue.put(pp);
+                    System.out.println(Thread.currentThread().getName()+" 的put添加方法已完成");
                 } catch (InterruptedException e) {
                     System.out.println("当前线程 " + Thread.currentThread().getName() + "操作的put方法出现异常");
                 }

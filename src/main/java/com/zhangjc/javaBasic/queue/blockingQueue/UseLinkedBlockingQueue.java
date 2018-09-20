@@ -1,5 +1,6 @@
 package com.zhangjc.javaBasic.queue.blockingQueue;
 
+import com.zhangjc.javaBasic.myThread.ThreadSleepTools;
 import com.zhangjc.javaBasic.queue.entry.People;
 
 import java.util.concurrent.LinkedBlockingDeque;
@@ -17,13 +18,12 @@ public class UseLinkedBlockingQueue {
         ProductThread productThread = new ProductThread(linkedBlockingDeque,monthName1);
         ConsumerThread consumerThread = new ConsumerThread(linkedBlockingDeque,monthName2);
 
-        for(int i = 0; i < 13; i++){
+        for(int i = 0; i < 10; i++){
             new Thread(productThread).start();
         }
 
-        for(int i = 0; i < 12; i++){
+        for(int i = 0; i < 16; i++){
             new Thread(consumerThread).start();
         }
-
     }
 }

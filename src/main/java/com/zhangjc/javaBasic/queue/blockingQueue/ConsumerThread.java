@@ -65,8 +65,11 @@ public class ConsumerThread implements Runnable{
                     ((LinkedBlockingDeque) queue).pollLast();
                 }
             }else {
+                People p = (People) queue.poll();
+                if(p != null){
+                    System.out.println("获取的用户的年纪是 "+ p.getAge());
+                }
                 System.out.println("当前队列还有 " + queue.size() + "未消费");
-                queue.poll();
             }
 
         }else if(TAKE == monthName){
@@ -87,9 +90,13 @@ public class ConsumerThread implements Runnable{
                     }
                 }
             }else {
-                System.out.println("当前队列还有 " + queue.size() + "未消费");
+
                 try {
-                    queue.take();
+                   People pp = (People) queue.take();
+                   if(pp != null){
+                       System.out.println("take的年纪 " + pp.getAge());
+                   }
+                   System.out.println("当前队列还有 " + queue.size() + "未消费");
                 } catch (InterruptedException e) {
                     System.out.println("当前线程 "+ Thread.currentThread().getName() + "操作的take方法出现异常");
                 }
