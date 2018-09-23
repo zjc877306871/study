@@ -21,6 +21,7 @@ public class DealJobPool {
     //获取当前服务器的CPU数
     private static final int cpuCount = Runtime.getRuntime().availableProcessors();
 
+    private static CheckProcessJob checkProcessJob =  CheckProcessJob.getInstance();;
     //执行任务的线程池
     private ExecutorService poolExecutor = new ThreadPoolExecutor(cpuCount,cpuCount,
             60,TimeUnit.SECONDS,queue);
@@ -30,13 +31,13 @@ public class DealJobPool {
     public DealJobPool() {
     }
 
-    public static class DealPoolHandle{
+    private static class DealPoolHandle {
         private static DealJobPool pool = new DealJobPool();
-
-        public static DealJobPool getPool(){
-            return DealPoolHandle.pool;
-        }
     }
+    public static DealJobPool getPool(){
+        return DealPoolHandle.pool;
+    }
+
     //利用内部类实现单例模式懒汉式
 
 
@@ -66,6 +67,7 @@ public class DealJobPool {
             TaskExecutor<R,T> executor = (TaskExecutor<R, T>) jobInfo.getExecutor();
             //执行业务人员的业务代码
             ResultInfo<R> result = executor.executeTask(data);
+            jobInfo.addTaskResult(result,checkProcessJob);
 
         }
     }

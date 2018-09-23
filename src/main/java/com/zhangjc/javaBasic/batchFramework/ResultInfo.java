@@ -36,4 +36,16 @@ public class ResultInfo<R> {
         this.resultVale = resultVale;
         this.reason = "SUCCESS";
     }
+
+    public ResultType getType() {
+        return type;
+    }
+
+    public R getResultVale() {
+        return resultVale;
+    }
+
+    public String getReason() {
+        return reason;
+    }
 }

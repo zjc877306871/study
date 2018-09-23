@@ -23,12 +23,12 @@ public class CheckProcessJob {
     public CheckProcessJob() {
     }
 
-    public static class CheckProcessJobHandle{
+    private static class CheckProcessJobHandle{
         private static CheckProcessJob pool = new CheckProcessJob();
+    }
 
-        public static CheckProcessJob getInstance(){
-            return CheckProcessJobHandle.pool;
-        }
+    public static CheckProcessJob getInstance(){
+        return CheckProcessJobHandle.pool;
     }
     //利用内部类实现单例模式懒汉式
 

@@ -93,8 +93,21 @@ public class JobInfo<R> {
         return list;
     }
 
-//    public void addTaskResult(){
-//
-//    }
+    /**
+     * 放置处理结果到结果队列中
+     * @param resultInfo
+     * @param job
+     */
+    public void addTaskResult(ResultInfo<R> resultInfo, CheckProcessJob job ){
+        if(ResultType.SUCCESS.equals(resultInfo.getType())){
+            successCount.incrementAndGet();
+        }
+        deque.addLast(resultInfo);
+        toatalCount.incrementAndGet();
+        if(toatalCount.get() == jobLength){
+            job.putJob(jobName,activeTime);
+        }
+
+    }
 
 }
