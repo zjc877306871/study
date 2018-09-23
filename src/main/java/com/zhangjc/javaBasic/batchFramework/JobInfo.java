@@ -93,7 +93,7 @@ public class JobInfo<R> {
         return list;
     }
 
-//    public void addTaskResult(LinkedBlockingDeque deque, TaskExecutor<?,?> executor){
+//    public void addTaskResult(){
 //
 //    }
 
