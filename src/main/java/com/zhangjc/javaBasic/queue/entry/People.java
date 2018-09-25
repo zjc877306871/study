@@ -3,7 +3,7 @@ package com.zhangjc.javaBasic.queue.entry;
 /**
  * Created by user on 2018/9/19.
  */
-public class People {
+public class People implements Comparable<People>{
 
     private String name;
     private int age;
@@ -31,5 +31,11 @@ public class People {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+
+    @Override
+    public int compareTo(People o) {
+        return this.age > o.getAge() ? 1 : (this.age < o.getAge() ? -1 : 0) ;
     }
 }
