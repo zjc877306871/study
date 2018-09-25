@@ -15,15 +15,16 @@ import java.util.concurrent.*;
 
 public class DealJobPool {
     //储存job任务的缓存容器
-    private static ConcurrentHashMap<String, JobInfo<?>> hashMap;
+    private static ConcurrentHashMap<String, JobInfo<?>> hashMap = new ConcurrentHashMap<>();
     //负责缓存Task的阻塞队列
-    private static BlockingQueue<Runnable> queue;
+    private static BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(5000);
     //获取当前服务器的CPU数
     private static final int cpuCount = Runtime.getRuntime().availableProcessors();
 
-    private static CheckProcessJob checkProcessJob =  CheckProcessJob.getInstance();;
+    //定时处理过期的消息信息
+    private static CheckProcessJob checkProcessJob =  CheckProcessJob.getInstance();
     //执行任务的线程池
-    private ExecutorService poolExecutor = new ThreadPoolExecutor(cpuCount,cpuCount,
+    private static ExecutorService poolExecutor = new ThreadPoolExecutor(cpuCount,cpuCount,
             60,TimeUnit.SECONDS,queue);
 
     //利用内部类实现单例模式懒汉式
@@ -63,11 +64,30 @@ public class DealJobPool {
         @Override
         public void run() {
             R r = null;
-            //获取任务的处理器
-            TaskExecutor<R,T> executor = (TaskExecutor<R, T>) jobInfo.getExecutor();
-            //执行业务人员的业务代码
-            ResultInfo<R> result = executor.executeTask(data);
-            jobInfo.addTaskResult(result,checkProcessJob);
+            ResultInfo<R> result = null;
+            try {
+                //获取任务的处理器
+                TaskExecutor<R,T> executor = (TaskExecutor<R, T>) jobInfo.getExecutor();
+                //执行业务人员的业务代码
+                result = executor.executeTask(data);
+                if(result == null){
+                    result = new ResultInfo<R>(ResultType.FAIL,r,"result is null");
+                }
+                if(result.getType() == null){
+                    if(result.getReason() == null){
+                        result = new ResultInfo<R>(ResultType.FAIL, r, "reason is null");
+                    }else{
+                        result = new ResultInfo<R>(ResultType.FAIL, r, "result is null," +
+                                "but reason is" + result.getReason());
+                    }
+                }
+            } catch (Exception e) {
+                result = new ResultInfo<R>(ResultType.EXCEPTION, r, e.getMessage());
+                e.printStackTrace();
+            } finally {
+                jobInfo.addTaskResult(result,checkProcessJob);
+            }
+
 
         }
     }
@@ -106,7 +126,10 @@ public class DealJobPool {
      */
     public void rejectJob(String jobName, int jobLength, long activeTime, TaskExecutor<?, ?> executor){
         JobInfo jobInfo = new JobInfo(jobName,jobLength,activeTime,executor);
-        hashMap.putIfAbsent(jobName,jobInfo);
+        if (hashMap.putIfAbsent(jobName, jobInfo)!=null) {
+            throw new RuntimeException(jobName+"已经注册了！");
+        }
+
     }
 
 

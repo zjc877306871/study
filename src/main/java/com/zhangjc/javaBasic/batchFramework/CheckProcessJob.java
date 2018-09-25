@@ -41,7 +41,7 @@ public class CheckProcessJob {
             while (true){
                 //拿到过期的job任务
                 try {
-                    PackOrder<String> order = queue.poll();
+                    PackOrder<String> order = queue.take();
                     String jobName = order.getDate();
                     DealJobPool.getMap().remove(jobName);
                     System.out.println(jobName+" is out of date,remove from map!");
