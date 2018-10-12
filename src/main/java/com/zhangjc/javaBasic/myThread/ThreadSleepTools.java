@@ -13,4 +13,12 @@ public class ThreadSleepTools {
         }
     }
 
+    public static void sleepMs(int seconds) {
+        try {
+            Thread.sleep(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
