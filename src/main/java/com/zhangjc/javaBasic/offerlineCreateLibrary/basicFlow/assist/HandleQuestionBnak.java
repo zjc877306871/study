@@ -1,9 +1,9 @@
-package com.zhangjc.javaBasic.offerlineCreateLibrary.basicFlow;/**
+package com.zhangjc.javaBasic.offerlineCreateLibrary.basicFlow.assist;/**
  * Created by user on 2018/10/10.
  */
 
 import com.zhangjc.javaBasic.offerlineCreateLibrary.basicFlow.constant.Constants;
-import com.zhangjc.javaBasic.offerlineCreateLibrary.basicFlow.sql.BussinessSql;
+import com.zhangjc.javaBasic.offerlineCreateLibrary.basicFlow.assist.BussinessSql;
 import com.zhangjc.javaBasic.offerlineCreateLibrary.basicFlow.vo.QuestionInDBVo;
 
 import java.util.Random;
@@ -39,7 +39,7 @@ public class HandleQuestionBnak {
     }
 
     //生成随机数，模拟生成题目内容
-    private static String makeQuestionDetail(int length){
+    public static String makeQuestionDetail(int length){
         String base = "abcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
         StringBuffer stringBuffer = new StringBuffer();
@@ -63,13 +63,13 @@ public class HandleQuestionBnak {
         }
     }
 
-    private static void updateQuestionTimer(){
+    public static void updateQuestionTimer(){
         System.out.println("开始定时更新题库..........................");
         updateQuestion.scheduleAtFixedRate(new UpdateBank(),15,5, TimeUnit.SECONDS);
     }
 
     //获取题目，假设一次数据库的读消耗一般在20ms
-    private static QuestionInDBVo getQuestion(int i){
+    public static QuestionInDBVo getQuestion(int i){
         BussinessSql.business(20);
         return questionMap.get(i);
     }
