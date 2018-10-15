@@ -3,12 +3,10 @@ package com.zhangjc.springStudy.chap6.config;/**
  */
 
 import com.zhangjc.springStudy.chap1.Person;
-import com.zhangjc.springStudy.chap5.config.LinuxCondition;
-import com.zhangjc.springStudy.chap5.config.WindowsCondition;
 import com.zhangjc.springStudy.chap6.config.vo.Cat;
 import com.zhangjc.springStudy.chap6.config.vo.Dog;
+import com.zhangjc.springStudy.chap6.config.vo.Self;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -28,12 +26,19 @@ public class Chap6Config {
      * 2、使用@Import直接
      *      使用ImportSelector 接口自定义筛选条件
      *      使用ImportBeanDefinitionRegistrar
+     *      使用ZhangFactoryBean，这种方式注册bean对象，获取self 对象时使用的key是factoryBean
+     *      那么如果获取ZhangFactoryBean对象使用的key是&factoryBean
      *
      */
 
     @Bean
     public Person person(){
         return new Person("zhangjc",20);
+    }
+
+    @Bean
+    public ZhangFactoryBean factoryBean(){
+        return new ZhangFactoryBean();
     }
 
 }

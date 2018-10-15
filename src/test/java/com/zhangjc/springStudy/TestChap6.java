@@ -4,8 +4,9 @@ package com.zhangjc.springStudy;
  * Created by user on 2018/10/11.
  */
 
-import com.zhangjc.springStudy.chap5.config.Chap5Config;
 import com.zhangjc.springStudy.chap6.config.Chap6Config;
+import com.zhangjc.springStudy.chap6.config.ZhangFactoryBean;
+import com.zhangjc.springStudy.chap6.config.vo.Self;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -29,6 +30,12 @@ public class TestChap6 {
             System.out.println(name);
         }
 
+        String[] beanNamesForType = app.getBeanNamesForType(ZhangFactoryBean.class);
+
+        for(String name : beanNamesForType){
+            System.out.println(name);
+        }
+        Class<?> factoryBean = app.getBean("factoryBean").getClass();
         System.out.println("容器初始化完成！！！！！！！！！！");
 
     }
