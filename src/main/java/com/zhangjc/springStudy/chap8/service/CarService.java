@@ -19,7 +19,7 @@ public class CarService {
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
-//    @Qualifier(value = "carDao")//和Autowired配合使用  指定注入的bean  如果配置文件中的@bean被@primry  修饰，那么被修饰primry的bean优先级最高
+//    @Qualifier(value = "carDao")//和Autowired配合使用  指定注入的bean
     private CarDao carDao;
 
     public void println(){
