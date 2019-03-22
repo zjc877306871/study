@@ -28,10 +28,10 @@ public class TestChap10 {
         bookAop.read(1,2);
 
 
-        String[] names = app.getBeanDefinitionNames();
-        for(String name : names){
-            System.out.println(name);
-        }
+//        String[] names = app.getBeanDefinitionNames();
+//        for(String name : names){
+//            System.out.println(name);
+//        }
         System.out.println("容器初始化完成！！！！！！！！！！");
 
     }

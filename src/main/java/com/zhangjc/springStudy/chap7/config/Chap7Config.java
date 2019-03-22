@@ -25,10 +25,10 @@ import org.springframework.context.annotation.Import;
 @ComponentScan("com.zhangjc.springStudy.chap7")
 public class Chap7Config {
 
-    @Bean
-    public Person person(){
-        return new Person("zhangjc",20);
-    }
+//    @Bean
+//    public Person person(){
+//        return new Person("zhangjc",20);
+//    }
 
 
     @Bean(initMethod = "init", destroyMethod = "destory")

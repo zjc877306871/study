@@ -3,6 +3,7 @@ package com.zhangjc.springStudy.chap10.aop;/**
  */
 
 
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
@@ -19,5 +20,11 @@ public class BeanAopHandle {
     @Before(value = "execution(public int com.zhangjc.springStudy.chap10.bean.*.*(..))")
     public void before(){
         System.out.println("--------before------");
+    }
+
+
+    @After(value = "execution(public int com.zhangjc.springStudy.chap10.bean.*.*(..))")
+    public void after(){
+        System.out.println("--------after------");
     }
 }
